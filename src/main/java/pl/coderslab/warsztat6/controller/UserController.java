@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import pl.coderslab.warsztat6.entity.User;
 import pl.coderslab.warsztat6.model.UserDTO;
@@ -36,6 +37,7 @@ public class UserController {
 		
 		this.userRepository.save(user);
 		return "redirect:/login";
+		//return "redirect:/user/login";
 	}
 	
 	@GetMapping("/login")
@@ -43,6 +45,7 @@ public class UserController {
 		
 		model.addAttribute("user", new UserDTO());
 		return "login";
+		//return "redirect:/user/login";
 	}
 	
 	@PostMapping("/login")
@@ -54,5 +57,13 @@ public class UserController {
 			return "redirect:/";
 		}
 		return "redirect:/login";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(SessionStatus status) {
+		
+		status.setComplete();
+		
+		return "redirect:/";
 	}
 }
